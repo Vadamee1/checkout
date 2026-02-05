@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "../../ui/form";
 import { UseFormReturn } from "react-hook-form";
-import { NewCategory } from "@/src/hooks/inventory/categories/use-new-category";
+import { NewCategory } from "@/src/hooks/inventory/categories/use-categories";
 
 interface NewCategoryFormProps {
   form: UseFormReturn<NewCategory>;

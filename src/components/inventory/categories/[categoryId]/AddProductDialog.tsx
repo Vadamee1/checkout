@@ -1,48 +1,48 @@
 "use client";
 
-import { Button } from "../../ui/button";
+import { UseFormReturn } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
-} from "../../ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import NewCategoryForm from "./NewCategoryForm";
-import { NewCategory } from "@/src/hooks/inventory/categories/use-categories";
-import { UseFormReturn } from "react-hook-form";
+} from "@/src/components/ui/dialog";
+import { Button } from "@/src/components/ui/button";
+import { NewProduct } from "@/src/hooks/inventory/categories/[categoryId]/use-products";
+import NewProductForm from "./NewProductForm";
 
-interface AddCategoryDialogProps {
+interface AddProductDialogProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  form: UseFormReturn<NewCategory>;
-  handleSubmit: (data: NewCategory) => Promise<void>;
+  form: UseFormReturn<NewProduct>;
+  handleSubmit: (data: NewProduct) => Promise<void>;
 }
 
-export default function AddCategoryDialog({
+export default function AddProductDialog({
   isOpen,
   setIsOpen,
   form,
   handleSubmit,
-}: AddCategoryDialogProps) {
+}: AddProductDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Agregar categoría</Button>
+        <Button>Agregar producto</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="font-bold text-xl">
-            Nueva categoría
+            Nuevo producto
           </DialogTitle>
           <DialogDescription>
             Crea una nueva categoría para organizar tus productos.
           </DialogDescription>
         </DialogHeader>
 
-        <NewCategoryForm form={form} />
+        <NewProductForm form={form} />
 
         <DialogFooter>
           <Button
