@@ -1,8 +1,10 @@
-import InventoryClient from "@/src/components/inventory/categories";
-import { getCategories } from "@/src/hooks/inventory/categories/use-get-categories";
+"use client";
 
-export default async function InventoryPage() {
-  const categories = await getCategories();
+import InventoryClient from "@/src/components/inventory/categories";
+import useGetCategories from "@/src/hooks/inventory/categories/use-get-categories";
+
+export default function InventoryPage() {
+  const { categories } = useGetCategories();
 
   return <InventoryClient initialCategories={categories} />;
 }

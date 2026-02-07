@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -16,6 +16,8 @@ export type NewCategory = z.infer<typeof formSchema>;
 export default function useCategories(initialCategories: Category[] = []) {
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>(initialCategories);
+  console.log(initialCategories);
+  console.log(categories);
 
   const form = useForm<NewCategory>({
     resolver: zodResolver(formSchema),
@@ -26,10 +28,6 @@ export default function useCategories(initialCategories: Category[] = []) {
   });
 
   async function handleSubmit(data: NewCategory) {
-    // Aquí llamarías a tu Server Action
-    // const newCategory = await createCategory(data);
-
-    // Actualizar el estado local
     const newCategory: Category = {
       id: Math.random().toString(),
       name: data.name,
@@ -43,10 +41,15 @@ export default function useCategories(initialCategories: Category[] = []) {
     setOpen(false);
   }
 
+  useEffect(() => {
+    setCategories(initialCategories);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return {
     form,
-    handleSubmit,
     open,
+    handleSubmit,
     setOpen,
     categories,
   };

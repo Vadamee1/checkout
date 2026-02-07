@@ -1,14 +1,14 @@
-import { PrismaClient, Prisma } from "../app/generated/prisma/client"
-import { PrismaPg } from "@prisma/adapter-pg"
-import "dotenv/config"
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Prisma, PrismaClient } from "@prisma/client";
+import "dotenv/config";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
-})
+});
 
 const prisma = new PrismaClient({
   adapter,
-})
+});
 
 const categoryData: Prisma.CategoryCreateInput[] = [
   {
@@ -64,25 +64,25 @@ const categoryData: Prisma.CategoryCreateInput[] = [
       ],
     },
   },
-]
+];
 
 export async function main() {
-  console.log("🌱 Seeding categories and products...")
+  console.log("🌱 Seeding categories and products...");
 
   for (const category of categoryData) {
     await prisma.category.create({
       data: category,
-    })
+    });
   }
 
-  console.log("✅ Seed completado correctamente")
+  console.log("✅ Seed completado correctamente");
 }
 
 main()
   .catch((e) => {
-    console.error("❌ Error en el seed:", e)
-    process.exit(1)
+    console.error("❌ Error en el seed:", e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });
