@@ -40,13 +40,22 @@ export const useFetch = (): UseFetchReturn => {
         toast.error("Respuesta inválida del servidor");
         return null;
       }
-      const data = await response.json();
+      const data: {
+        data: any;
+        messages:
+          | { type: "success" | "error" | "warning"; text: string }[]
+          | [];
+      } = await response.json();
 
       if (response.ok) {
-        toast.success(data.message || "Operación exitosa");
+        data.messages.map((msg) =>
+          toast[msg.type || "success"](msg.text || "Operación exitosa"),
+        );
         return { data: data.data } as T;
       } else {
-        toast.error(data.message || data.error || "Ocurrió un error");
+        data.messages.map((msg) =>
+          toast[msg.type || "error"](msg.text || "Operación fallida"),
+        );
         return null;
       }
     } catch (error) {

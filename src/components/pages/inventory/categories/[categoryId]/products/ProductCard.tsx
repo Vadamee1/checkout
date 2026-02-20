@@ -1,20 +1,17 @@
 "use client";
 
 import { Card, CardContent } from "@/src/components/ui/card";
+import { getStockStatus } from "@/src/helpers/inventory/getStockStatus";
 
 interface ProductCardProps {
   title: string;
-  available: boolean;
   icon: string;
   stock: string;
 }
 
-export default function ProductCard({
-  title,
-  available,
-  icon,
-  stock,
-}: ProductCardProps) {
+export default function ProductCard({ title, icon, stock }: ProductCardProps) {
+  const stockStatus = getStockStatus(stock);
+
   return (
     <Card
       className={`bg-card border border-gray-400 hover:border-primary cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
@@ -29,17 +26,10 @@ export default function ProductCard({
         <h3 className="text-2xl font-bold">{title}</h3>
 
         <div className="mb-0">Stock: {stock}</div>
+
         <div className="flex items-center gap-2">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              available
-                ? "bg-(--status-available)"
-                : "bg-(--status-unavailable)"
-            }`}
-          />
-          <span className="text-sm">
-            {available ? "Disponible" : "No disponible"}
-          </span>
+          <div className={`w-2 h-2 rounded-full ${stockStatus.color}`} />
+          <span className="text-sm">{stockStatus.label}</span>
         </div>
       </CardContent>
     </Card>
