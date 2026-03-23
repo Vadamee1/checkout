@@ -36,6 +36,9 @@ export async function POST(req: NextRequest) {
     data: {
       name,
     },
+    select: {
+      name: true,
+    },
   });
 
   return NextResponse.json({

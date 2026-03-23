@@ -19,14 +19,35 @@ export async function GET(_: NextRequest, { params }: Params) {
       data: null,
     });
 
+  const categoryName = await prisma.category.findUnique({
+    where: {
+      id: categoryId,
+    },
+    select: {
+      name: true,
+    },
+  });
+
   const products = await prisma.product.findMany({
     where: {
       categoryId,
+    },
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      stock: true,
     },
     orderBy: {
       id: "asc",
     },
   });
 
-  return NextResponse.json({ messages: [], data: products });
+  return NextResponse.json({
+    messages: [],
+    data: {
+      name: categoryName?.name,
+      products,
+    },
+  });
 }
