@@ -66,21 +66,66 @@ const categoryData: Prisma.CategoryCreateInput[] = [
   },
 ];
 
-export async function main() {
-  console.log("🌱 Seeding categories and products...");
+const rolData: Prisma.RolCreateInput[] = [
+  {
+    name: "Administrador",
+  },
+  {
+    name: "Empleado",
+  },
+];
 
-  for (const category of categoryData) {
-    await prisma.category.create({
-      data: category,
+const userData: Prisma.UserCreateInput[] = [
+  {
+    username: "admin",
+    password: "admin",
+    rol: {
+      connect: {
+        id: 1,
+      },
+    },
+    isEnabled: true,
+  },
+  {
+    username: "empleado",
+    password: "empleado",
+    rol: {
+      connect: {
+        id: 2,
+      },
+    },
+    isEnabled: true,
+  },
+];
+
+export async function main() {
+  console.log("Seeding categories and products...");
+
+  // Poblar categorias
+  // for (const category of categoryData) {
+  //   await prisma.category.create({
+  //     data: category,
+  //   });
+  // }
+
+  // Poblar users rol
+  for (const rol of rolData) {
+    await prisma.rol.create({
+      data: rol,
+    });
+  }
+  for (const user of userData) {
+    await prisma.user.create({
+      data: user,
     });
   }
 
-  console.log("✅ Seed completado correctamente");
+  console.log("Seed completado correctamente");
 }
 
 main()
   .catch((e) => {
-    console.error("❌ Error en el seed:", e);
+    console.error("Error en el seed:", e);
     process.exit(1);
   })
   .finally(async () => {
