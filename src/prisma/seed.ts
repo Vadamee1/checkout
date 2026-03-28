@@ -102,11 +102,11 @@ export async function main() {
   console.log("Seeding categories and products...");
 
   // Poblar categorias
-  // for (const category of categoryData) {
-  //   await prisma.category.create({
-  //     data: category,
-  //   });
-  // }
+  for (const category of categoryData) {
+    await prisma.category.create({
+      data: category,
+    });
+  }
 
   // Poblar users rol
   for (const rol of rolData) {
