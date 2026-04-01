@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/src/lib/prisma";
+import { User } from "@/src/lib/schemas/users";
+import bcrypt from "bcrypt";
 
 // GET ALL USERS
 export async function GET(_: NextRequest) {
@@ -38,14 +40,18 @@ export async function GET(_: NextRequest) {
 // CREATE USER
 export async function POST(request: NextRequest) {
   try {
-    const { username, password, rolId } = await request.json();
-    if (!username || !password || !rolId) {
+    const body = await request.json();
+
+    const result = User.safeParse(body);
+
+    if (!result.success) {
+      console.log(result.error);
       return NextResponse.json(
         {
           messages: [
             {
               type: "error",
-              text: "Faltan datos",
+              text: "Error al crear el usuario",
             },
           ],
           data: null,
@@ -54,50 +60,86 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = await prisma.user.create({
-      data: {
+    const { username, password, rolId } = result.data;
+
+    const userExist = await prisma.user.findFirst({
+      where: {
         username,
-        password,
-        rolId,
-        isEnabled: true,
       },
     });
 
-    if (!user) {
+    if (userExist) {
       return NextResponse.json(
         {
-          messages: [
-            {
-              type: "error",
-              text: "No se pudo crear el usuario",
-            },
-          ],
+          messages: [{ type: "error", text: "El usuario ya existe" }],
           data: null,
         },
-        { status: 500 },
-      );
-    } else {
-      return NextResponse.json(
         {
-          messages: [
-            {
-              type: "success",
-              text: "Usuario creado",
-            },
-          ],
-          data: user,
+          status: 404,
         },
-        { status: 201 },
       );
     }
+
+    if (!rolId) {
+      return NextResponse.json(
+        {
+          messages: [{ type: "error", text: "El rol es requerido" }],
+          data: null,
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    const rolExist = await prisma.rol.findFirst({
+      where: {
+        id: rolId,
+      },
+    });
+
+    if (!rolExist) {
+      return NextResponse.json(
+        {
+          messages: [{ type: "error", text: "El rol no existe" }],
+          data: null,
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const newUser = await prisma.user.create({
+      data: {
+        username,
+        password: passwordHash,
+        rolId,
+      },
+      select: {
+        id: true,
+        username: true,
+        rolId: true,
+        rol: true,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        messages: [{ type: "success", text: "Usuario creado" }],
+        data: newUser,
+      },
+      { status: 201 },
+    );
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       {
         messages: [
           {
             type: "error",
-            text: error,
+            text: "Error al crear el usuario",
           },
         ],
         data: null,
