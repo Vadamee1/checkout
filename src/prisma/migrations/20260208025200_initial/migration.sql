@@ -25,6 +25,7 @@ CREATE TABLE "products" (
     "name" VARCHAR(255) NOT NULL,
     "stock" INTEGER NOT NULL DEFAULT 0,
     "price" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+    "image" VARCHAR(255),
     "category_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
