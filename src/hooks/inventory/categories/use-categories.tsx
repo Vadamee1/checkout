@@ -11,7 +11,6 @@ import { Button } from "@/src/components/ui/button";
 
 const formSchema = z.object({
   name: z.string().min(5, "El nombre debe tener al menos 5 caracteres"),
-  icon: z.string().min(1, "El ícono es requerido"),
 });
 
 export type NewCategory = z.infer<typeof formSchema>;
@@ -27,7 +26,6 @@ export default function useCategories() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      icon: "",
     },
   });
 
@@ -70,6 +68,7 @@ export default function useCategories() {
     addOpen,
     handleSubmit,
     setAddOpen,
+    setCategories,
     categories,
   };
 }

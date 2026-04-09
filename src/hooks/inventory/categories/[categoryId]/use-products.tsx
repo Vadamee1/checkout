@@ -25,6 +25,7 @@ export default function useProducts(categoryId: string) {
   const { setTitle, setChildren } = useNavbar();
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [categoryName, setCategoryName] = useState("");
@@ -57,18 +58,18 @@ export default function useProducts(categoryId: string) {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const getProducts = async () => {
       const { data } = await jsonFetch(`/api/categories/${categoryId}`, "GET");
-      console.log("Fetched products", { data });
       if (data) {
-        setProducts(data);
+        setProducts(data.products);
         setCategoryName(data.name);
       }
     };
     getProducts();
+    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("Products state updated", { products });
 
   useEffect(() => {
     setTitle(`Inventario: ${categoryName}`);
@@ -85,7 +86,6 @@ export default function useProducts(categoryId: string) {
         <Button size="lg" className="text-lg" onClick={() => setOpen(true)}>
           Agregar categoría
         </Button>
-        ,
       </>,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,6 +93,7 @@ export default function useProducts(categoryId: string) {
 
   return {
     form,
+    isLoading,
     handleSubmit,
     open,
     handleCloseDialog,

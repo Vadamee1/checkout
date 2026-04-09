@@ -12,11 +12,11 @@ import {
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
 
-interface NewCategoryFormProps {
+interface UpdateCategoryFormProps {
   form: UseFormReturn<NewCategory>;
 }
 
-export default function NewCategoryForm({ form }: NewCategoryFormProps) {
+export default function UpdateCategoryForm({ form }: UpdateCategoryFormProps) {
   return (
     <Form {...form}>
       <form id="new-category-form" className="space-y-4">

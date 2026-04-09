@@ -3,11 +3,11 @@
 import useCategories from "@/src/hooks/inventory/categories/use-categories";
 import AddCategoryDialog from "./AddCategoryDialog";
 import CategoryCard from "./CategoryCard";
-import UpdateCategoryDialog from "./UpdateCategoryDialog";
+import UpdateCategoryDialog from "./update/UpdateCategoryDialog";
 import DeleteCategoryDialog from "./DeleteCategoryDialog";
 
 export default function CategoryList() {
-  const { form, handleSubmit, addOpen, setAddOpen, categories } =
+  const { form, handleSubmit, addOpen, setAddOpen, categories, setCategories } =
     useCategories();
 
   return (
@@ -26,7 +26,10 @@ export default function CategoryList() {
           <div key={category.id}>
             <CategoryCard id={category.id} title={category.name} />
             <div className="grid grid-cols-2 gap-3 mt-2">
-              <UpdateCategoryDialog category={category} />
+              <UpdateCategoryDialog
+                category={category}
+                setCategories={setCategories}
+              />
               <DeleteCategoryDialog category={category} />
             </div>
           </div>

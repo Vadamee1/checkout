@@ -39,7 +39,7 @@ export default function DeleteCategoryDialog({
               Cancelar
             </Button>
           </DialogClose>
-          <Button type="button" onClick={() => console.log("Guardar")}>
+          <Button type="button" onClick={() => console.log("Eliminar")}>
             Eliminar
           </Button>
         </DialogFooter>
