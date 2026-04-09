@@ -1,6 +1,5 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
 import NewCategoryForm from "./NewCategoryForm";
 import { NewCategory } from "@/src/hooks/inventory/categories/use-categories";
 import { UseFormReturn } from "react-hook-form";
@@ -10,6 +9,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
 } from "@/src/components/ui/dialog";
 import { Button } from "@/src/components/ui/button";
 

@@ -20,7 +20,7 @@ export default function useCategories() {
   const { jsonFetch } = useFetch();
   const { setTitle, setChildren } = useNavbar();
 
-  const [open, setOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
 
   const form = useForm<NewCategory>({
@@ -40,13 +40,13 @@ export default function useCategories() {
 
     setCategories([...categories, createdCategory]);
     form.reset();
-    setOpen(false);
+    setAddOpen(false);
   };
 
   useEffect(() => {
     setTitle("Inventario: Categorías");
     setChildren(
-      <Button size="lg" className="text-lg" onClick={() => setOpen(true)}>
+      <Button size="lg" className="text-lg" onClick={() => setAddOpen(true)}>
         Agregar categoría
       </Button>,
     );
@@ -67,9 +67,9 @@ export default function useCategories() {
 
   return {
     form,
-    open,
+    addOpen,
     handleSubmit,
-    setOpen,
+    setAddOpen,
     categories,
   };
 }
