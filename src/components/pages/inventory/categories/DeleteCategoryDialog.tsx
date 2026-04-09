@@ -9,16 +9,24 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { Category } from "@/src/types/category";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
+import DeleteCategoryById from "@/src/hooks/inventory/categories/[categoryId]/delete-category-by-id";
 
 interface UpdateCategoryDialogProps {
   category: Category;
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 }
 
 export default function DeleteCategoryDialog({
   category,
+  setCategories,
 }: UpdateCategoryDialogProps) {
+  const { deleteOpen, handleSubmit, setDeleteOpen } = DeleteCategoryById(
+    category,
+    setCategories,
+  );
+
   return (
-    <Dialog>
+    <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
       <DialogTrigger asChild>
         <Button variant="destructive">Eliminar</Button>
       </DialogTrigger>
@@ -33,13 +41,13 @@ export default function DeleteCategoryDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter>
+        <DialogFooter className="mt-0">
           <DialogClose asChild>
-            <Button variant="destructive" type="button">
+            <Button variant="secondary" type="button">
               Cancelar
             </Button>
           </DialogClose>
-          <Button type="button" onClick={() => console.log("Eliminar")}>
+          <Button type="button" variant="destructive" onClick={handleSubmit}>
             Eliminar
           </Button>
         </DialogFooter>

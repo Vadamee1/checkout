@@ -45,7 +45,7 @@ export default function UpdateCategoryDialog({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="destructive" type="button">
+            <Button variant="secondary" type="button">
               Cancelar
             </Button>
           </DialogClose>

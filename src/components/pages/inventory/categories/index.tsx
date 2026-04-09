@@ -30,7 +30,10 @@ export default function CategoryList() {
                 category={category}
                 setCategories={setCategories}
               />
-              <DeleteCategoryDialog category={category} />
+              <DeleteCategoryDialog
+                category={category}
+                setCategories={setCategories}
+              />
             </div>
           </div>
         ))}
