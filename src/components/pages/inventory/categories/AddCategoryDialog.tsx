@@ -1,18 +1,17 @@
 "use client";
 
-import { Button } from "../../ui/button";
+import NewCategoryForm from "./NewCategoryForm";
+import { NewCategory } from "@/src/hooks/inventory/categories/use-categories";
+import { UseFormReturn } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTrigger,
-} from "../../ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import NewCategoryForm from "./NewCategoryForm";
-import { NewCategory } from "@/src/hooks/inventory/categories/use-categories";
-import { UseFormReturn } from "react-hook-form";
+  DialogTitle,
+} from "@/src/components/ui/dialog";
+import { Button } from "@/src/components/ui/button";
 
 interface AddCategoryDialogProps {
   isOpen: boolean;
@@ -29,9 +28,6 @@ export default function AddCategoryDialog({
 }: AddCategoryDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button>Agregar categoría</Button>
-      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="font-bold text-xl">

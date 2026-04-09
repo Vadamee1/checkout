@@ -1,6 +1,7 @@
 "use client";
 
-import { Input } from "../../ui/input";
+import { UseFormReturn } from "react-hook-form";
+import { NewCategory } from "@/src/hooks/inventory/categories/use-categories";
 import {
   Form,
   FormControl,
@@ -8,9 +9,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
-import { UseFormReturn } from "react-hook-form";
-import { NewCategory } from "@/src/hooks/inventory/categories/use-categories";
+} from "@/src/components/ui/form";
+import { Input } from "@/src/components/ui/input";
 
 interface NewCategoryFormProps {
   form: UseFormReturn<NewCategory>;

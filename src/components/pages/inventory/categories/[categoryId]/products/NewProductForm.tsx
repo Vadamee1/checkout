@@ -1,6 +1,7 @@
 "use client";
 
-import { Input } from "../../../ui/input";
+import { UseFormReturn } from "react-hook-form";
+import { NewProduct } from "@/src/hooks/inventory/categories/[categoryId]/use-products";
 import {
   Form,
   FormControl,
@@ -8,9 +9,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../ui/form";
-import { UseFormReturn } from "react-hook-form";
-import { NewProduct } from "@/src/hooks/inventory/categories/[categoryId]/use-products";
+} from "@/src/components/ui/form";
+import { Input } from "@/src/components/ui/input";
 
 interface NewProductFormProps {
   form: UseFormReturn<NewProduct>;
@@ -28,6 +28,20 @@ export default function NewProductForm({ form }: NewProductFormProps) {
               <FormLabel htmlFor="product-name">Nombre del producto</FormLabel>
               <FormControl>
                 <Input id="product-name" placeholder="Nombre..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="price"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="product-price">Precio del producto</FormLabel>
+              <FormControl>
+                <Input id="product-price" placeholder="Precio..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

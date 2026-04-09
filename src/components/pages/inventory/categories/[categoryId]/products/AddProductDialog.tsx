@@ -8,7 +8,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/src/components/ui/dialog";
 import { Button } from "@/src/components/ui/button";
 import { NewProduct } from "@/src/hooks/inventory/categories/[categoryId]/use-products";
@@ -29,17 +28,12 @@ export default function AddProductDialog({
 }: AddProductDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button>Agregar producto</Button>
-      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="font-bold text-xl">
             Nuevo producto
           </DialogTitle>
-          <DialogDescription>
-            Crea una nueva categoría para organizar tus productos.
-          </DialogDescription>
+          <DialogDescription>Crea un nuevo producto.</DialogDescription>
         </DialogHeader>
 
         <NewProductForm form={form} />
